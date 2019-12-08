@@ -15,9 +15,6 @@ RUN set -eux; \
 	mkdir -p /var/lib/postgresql; \
 	chown -R postgres:postgres /var/lib/postgresql
 
-ENV PGDATA /var/lib/postgresql/data
-ENV TARGET_VERSION 12
-
 RUN set -eux; \
 	apt-get update; \
 	apt-get install -y wget ca-certificates gnupg; \
@@ -35,6 +32,7 @@ RUN set -x \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true
 
+ENV TARGET_VERSION 12
 RUN set -eux; \
 	echo deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main > /etc/apt/sources.list.d/pgdg.list; \
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -; \
@@ -46,4 +44,5 @@ RUN set -eux; \
 	rm -rf /var/lib/postgresql/*
 
 COPY entrypoint.sh /
+ENV PGDATA /var/lib/postgresql/data
 ENTRYPOINT ["gosu", "postgres", "/entrypoint.sh"]
