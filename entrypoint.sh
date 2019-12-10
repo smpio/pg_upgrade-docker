@@ -16,7 +16,7 @@ else
 	target_version="${1:-${TARGET_VERSION:-default}}"
 	mkdir "$PGDATA/_source" "$PGDATA/_target"
 	chmod 700 "$PGDATA/_source" "$PGDATA/_target"
-	mv "$PGDATA/!(_source|_target)" "$PGDATA/_source/"
+	mv "$PGDATA/"!(_source|_target) "$PGDATA/_source/"
 fi
 
 if [ ! -x "/usr/lib/postgresql/$source_version/bin/initdb" ]; then
@@ -45,6 +45,6 @@ echo "pg_upgrade $source_version -> $target_version"
 	--old-datadir="$PGDATA/_source" \
 	--new-datadir="$PGDATA/_target"
 
-mv "$PGDATA/_target/*" "$PGDATA/"
+mv "$PGDATA/_target/"* "$PGDATA/"
 rmdir "$PGDATA/_target"
 rm -rf "$PGDATA/_source"
