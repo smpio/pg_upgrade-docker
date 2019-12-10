@@ -8,7 +8,7 @@ JOBS=${JOBS:-${default_jobs}}
 
 
 if [ -d "$PGDATA/_source" ]; then
-	echo 'Found non-finished upgrade session'
+	echo 'Found unfinished upgrade session'
 	source_version="$(cat $PGDATA/_source/PG_VERSION)"
 	target_version="$(cat $PGDATA/_target/PG_VERSION)"
 else
