@@ -9,10 +9,10 @@ JOBS=${JOBS:-${default_jobs}}
 
 if [ -d "$PGDATA/_source" ]; then
 	echo 'Found unfinished upgrade session'
-	source_version="$(cat $PGDATA/_source/PG_VERSION)"
-	target_version="$(cat $PGDATA/_target/PG_VERSION)"
+	source_version="$(cat "$PGDATA/_source/PG_VERSION")"
+	target_version="$(cat "$PGDATA/_target/PG_VERSION")"
 else
-	source_version="$(cat $PGDATA/PG_VERSION)"
+	source_version="$(cat "$PGDATA/PG_VERSION")"
 	target_version="${1:-${TARGET_VERSION:-default}}"
 	mkdir "$PGDATA/_source" "$PGDATA/_target"
 	chmod 700 "$PGDATA/_source" "$PGDATA/_target"
