@@ -8,7 +8,7 @@ JOBS=${JOBS:-${default_jobs}}
 
 
 if [ -d "$PGDATA/_source" ]; then
-	echo 'Found unfinished upgrade session'
+	echo '>>> Found unfinished upgrade session'
 	source_version="$(cat "$PGDATA/_source/PG_VERSION")"
 	target_version="$(cat "$PGDATA/_target/PG_VERSION")"
 else
@@ -20,23 +20,24 @@ else
 fi
 
 if [ ! -x "/usr/lib/postgresql/$source_version/bin/initdb" ]; then
-	echo "Unsupported PostgreSQL version: $source_version"
+	echo ">>> Unsupported PostgreSQL version: $source_version"
 	exit 1
 fi
 
 if [ ! -x "/usr/lib/postgresql/$target_version/bin/initdb" ]; then
-	echo "Unsupported PostgreSQL version: $target_version"
+	echo ">>> Unsupported PostgreSQL version: $target_version"
 	exit 1
 fi
 
 if [ ! -f "$PGDATA/_target/PG_VERSION" ]; then
-	echo "initdb $target_version"
+	echo ">>> initdb $target_version"
 	"/usr/lib/postgresql/$target_version/bin/initdb" "$PGDATA/_target"
 fi
 
 cd "$PGDATA/_target"
 
-echo "pg_upgrade $source_version -> $target_version"
+echo ">>> pg_upgrade $source_version -> $target_version"
+set -x
 "/usr/lib/postgresql/$target_version/bin/pg_upgrade" \
 	--old-bindir="/usr/lib/postgresql/$source_version/bin" \
 	--new-bindir="/usr/lib/postgresql/$target_version/bin" \
@@ -44,6 +45,7 @@ echo "pg_upgrade $source_version -> $target_version"
 	--link \
 	--old-datadir="$PGDATA/_source" \
 	--new-datadir="$PGDATA/_target"
+set +x
 
 mv "$PGDATA/_target/"* "$PGDATA/"
 rmdir "$PGDATA/_target"
