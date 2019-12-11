@@ -37,16 +37,18 @@ fi
 cd "$PGDATA/_target"
 
 echo ">>> pg_upgrade $source_version -> $target_version"
-set -x
-"/usr/lib/postgresql/$target_version/bin/pg_upgrade" \
+(set -x; "/usr/lib/postgresql/$target_version/bin/pg_upgrade" \
 	--old-bindir="/usr/lib/postgresql/$source_version/bin" \
 	--new-bindir="/usr/lib/postgresql/$target_version/bin" \
 	--jobs="$JOBS" \
 	--link \
 	--old-datadir="$PGDATA/_source" \
 	--new-datadir="$PGDATA/_target"
-set +x
+)
 
 mv "$PGDATA/_target/"* "$PGDATA/"
 rmdir "$PGDATA/_target"
 rm -rf "$PGDATA/_source"
+
+echo "Done!"
+echo "Warning! Config files may be overwritten!"
