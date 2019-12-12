@@ -46,9 +46,14 @@ echo ">>> pg_upgrade $source_version -> $target_version"
 	--new-datadir="$PGDATA/_target"
 )
 
+if [ -f "$PGDATA/_source/postgresql.auto.conf" ]; then
+	(set -x; cp "$PGDATA/_source/postgresql.auto.conf" "$PGDATA/_target/")
+fi
+
 mv "$PGDATA/_target/"* "$PGDATA/"
 rmdir "$PGDATA/_target"
 rm -rf "$PGDATA/_source"
 
 echo "Done!"
-echo "Warning! Config files may be overwritten!"
+echo "Warning! pg_hba.conf and postgresql.conf overwritten!"
+echo "postgresql.auto.conf kept"
