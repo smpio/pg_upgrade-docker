@@ -47,13 +47,18 @@ echo ">>> pg_upgrade $source_version -> $target_version"
 )
 
 if [ -f "$PGDATA/_source/postgresql.auto.conf" ]; then
+	echo ">>> save postgresql.auto.conf"
 	(set -x; cp "$PGDATA/_source/postgresql.auto.conf" "$PGDATA/_target/")
+fi
+
+if [ -f "$PGDATA/_source/hg_hba.conf" ]; then
+	echo ">>> save hg_hba.conf"
+	(set -x; cp "$PGDATA/_source/hg_hba.conf" "$PGDATA/_target/")
 fi
 
 mv "$PGDATA/_target/"* "$PGDATA/"
 rmdir "$PGDATA/_target"
 rm -rf "$PGDATA/_source"
 
-echo "Done!"
-echo "Warning! pg_hba.conf and postgresql.conf overwritten!"
-echo "postgresql.auto.conf kept"
+echo ">>> Done!"
+echo ">>> Warning! postgresql.conf is overwritten!"
