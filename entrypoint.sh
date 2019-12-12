@@ -37,7 +37,7 @@ fi
 cd "$PGDATA/_target"
 
 echo ">>> pg_upgrade $source_version -> $target_version"
-(set -x; "/usr/lib/postgresql/$target_version/bin/pg_upgrade" \
+(set -x; time "/usr/lib/postgresql/$target_version/bin/pg_upgrade" \
 	--old-bindir="/usr/lib/postgresql/$source_version/bin" \
 	--new-bindir="/usr/lib/postgresql/$target_version/bin" \
 	--jobs="$JOBS" \
