@@ -51,9 +51,9 @@ if [ -f "$PGDATA/_source/postgresql.auto.conf" ]; then
 	(set -x; cp "$PGDATA/_source/postgresql.auto.conf" "$PGDATA/_target/")
 fi
 
-if [ -f "$PGDATA/_source/hg_hba.conf" ]; then
-	echo ">>> save hg_hba.conf"
-	(set -x; cp "$PGDATA/_source/hg_hba.conf" "$PGDATA/_target/")
+if [ -f "$PGDATA/_source/pg_hba.conf" ]; then
+	echo ">>> save pg_hba.conf"
+	(set -x; cp "$PGDATA/_source/pg_hba.conf" "$PGDATA/_target/")
 fi
 
 mv "$PGDATA/_target/"* "$PGDATA/"
