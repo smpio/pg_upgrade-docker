@@ -15,6 +15,6 @@ on:
 
 jobs:
   build:
-    uses: smpio/github-workflows/docker.yaml@master
+    uses: smpio/github-workflows/.github/workflows/docker.yaml@master
     with:
       image_name: smpio/pg_upgrade
