@@ -60,5 +60,7 @@ mv "$PGDATA/_target/"* "$PGDATA/"
 rmdir "$PGDATA/_target"
 rm -rf "$PGDATA/_source"
 
+rm "$PGDATA/delete_old_cluster.sh" || true
+
 echo ">>> Done!"
 echo ">>> Warning! postgresql.conf is overwritten!"
