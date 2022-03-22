@@ -14,6 +14,10 @@ if [ -d "$PGDATA/_source" ]; then
 else
 	source_version="$(cat "$PGDATA/PG_VERSION")"
 	target_version="${1:-${TARGET_VERSION:-default}}"
+	if [[ "$source_version" == "$target_version" ]]; then
+		echo ">>> Source version is $source_version, nothing to do"
+		exit 0
+	fi
 	mkdir "$PGDATA/_source" "$PGDATA/_target"
 	chmod 700 "$PGDATA/_source" "$PGDATA/_target"
 	mv "$PGDATA/"!(_source|_target) "$PGDATA/_source/"
