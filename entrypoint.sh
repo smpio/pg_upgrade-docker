@@ -66,5 +66,7 @@ rm -rf "$PGDATA/_source"
 
 rm "$PGDATA/delete_old_cluster.sh" || true
 
+echo "listen_addresses = '*'" >> "$PGDATA/postgresql.auto.conf"
+
 echo ">>> Done!"
 echo ">>> Warning! postgresql.conf is overwritten!"
