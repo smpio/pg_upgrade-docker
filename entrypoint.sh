@@ -35,7 +35,7 @@ fi
 
 if [ ! -f "$PGDATA/_target/PG_VERSION" ]; then
 	echo ">>> initdb $target_version"
-	"/usr/lib/postgresql/$target_version/bin/initdb" "$PGDATA/_target"
+	"/usr/lib/postgresql/$target_version/bin/initdb" --username="$PGUSER" "$PGDATA/_target"
 fi
 
 cd "$PGDATA/_target"
